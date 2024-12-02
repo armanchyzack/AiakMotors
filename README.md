@@ -27,42 +27,31 @@ AiakMotors is an eCommerce website where users can browse and purchase cars and 
    git clone https://github.com/yourusername/aiakmotors.git
 
 Navigate to the project directory:
+    cd aiakmotors
 
-bash
-Copy code
-cd aiakmotors
 Install dependencies:
+    composer install
+    npm install
 
-bash
-Copy code
-composer install
-npm install
 Set up your .env file by copying .env.example:
-
-bash
-Copy code
-cp .env.example .env
+    cp .env.example .env
+    
 Generate the application key:
+    php artisan key:generate
 
-bash
-Copy code
-php artisan key:generate
 Run the database migrations:
+    php artisan migrate
 
-bash
-Copy code
-php artisan migrate
 Serve the application:
-
-bash
-Copy code
-php artisan serve
+    php artisan serve
+    
 Your application will now be running at http://127.0.0.1:8000.
+
 Contributing
-Fork the repository.
-Create a new branch (git checkout -b feature-branch).
-Commit your changes (git commit -am 'Add new feature').
-Push to the branch (git push origin feature-branch).
+  Fork the repository.
+  Create a new branch (git checkout -b feature-branch).
+  Commit your changes (git commit -am 'Add new feature').
+  Push to the branch (git push origin feature-branch).
 Create a new Pull Request.
 
 
