@@ -5,7 +5,7 @@
     </div>
     <div class="card-body row">
       <h5 class="card-title col-6">All Cars</h5>
-        <span class="col-6 text-end"><a href="" class="btn btn-success btn-sm">Add Car</a></span>
+        <span class="col-6 text-end"><a href="<?php echo e(route('accessory.view')); ?>" class="btn btn-success btn-sm">Add Accessory</a></span>
         <hr>
       <div class="table-responsive">
         <table class="display table">
@@ -15,6 +15,8 @@
                 <th scope="col">Image</th>
                 <th scope="col">Category</th>
                 <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Status</th>
                 <th scope="">Edit</th>
                 <th scope="">Delete</th>
 
@@ -22,22 +24,36 @@
             </thead>
             <tbody class="table-group-divider">
 
-
+                <?php $__currentLoopData = $accessories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=>$ass): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
-                  <th scope="row"></th>
-                  <td style="height: 2rem; width:1rem"><img style="width: 100%; height:100%" src="" alt=""></td>
+                  <th scope="row"><?php echo e(++$key); ?></th>
+                  <td style="height: 2rem; width:1rem"><img style="width: 100%; height:100%" src="<?php echo e($ass->image_url); ?>" alt=""></td>
                   <td>
-                    sgad
-                  </td>
-                  <td></td>
+                    <?php echo e($ass->category->title); ?>
 
-                  <td class="parent_class " id="expanded_employee" data-id=""><a href=""><i class='fas fa-edit' style='font-size:1rem'></i></a></td>
+                  </td>
+                  <td><?php echo e($ass->name); ?></td>
+                  <td><?php echo e($ass->price); ?></td>
+                  <td>
+                    <?php if($ass->status == 0): ?>
+
+                    <a href="<?php echo e(route('accessory.status.update', $ass->id)); ?> " btn btn-sm btn-success> <i class="fa-solid fa-toggle-on h5" style="color: #63E6BE;"></i></a>
+                    <?php else: ?>
+                    <a href="<?php echo e(route('accessory.status.update', $ass->id)); ?> " btn-sm btn-danger> <i class="fa-solid fa-toggle-off h5" style="color: #ac1025;"></i></a>
+
+                    <?php endif; ?>
+
+
+
+                  </td>
+
+                  <td class="parent_class " id="expanded_employee" data-id=""><a href="<?php echo e(route('accessory.edit', $ass->id)); ?>"><i class='fas fa-edit' style='font-size:1rem'></i></a></td>
                   <td class="text-right deleteBtn">
-                    <button class="btn btn-sm" onclick="">
+                    <button class="btn btn-sm" onclick="confirmDelete(<?php echo e($ass->id); ?>)">
                         <i class='fas fa-trash' style='font-size:1rem;color:red'></i>
                     </button>
                     <a href="#"  class="btn btn-sm deleteBtn"></a>
-                    <form action="" id="delete-form-" method="POST">
+                    <form action="<?php echo e(route('accessory.delete', $ass->id)); ?>" id="delete-form-<?php echo e($ass->id); ?>" method="POST">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field("DELETE"); ?>
 
@@ -45,6 +61,8 @@
 
                   </td>
                 </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
             </tbody>
           </table>
 

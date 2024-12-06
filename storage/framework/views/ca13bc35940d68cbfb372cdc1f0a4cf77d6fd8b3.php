@@ -59,8 +59,8 @@
 
         .images{
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border: 1px solid #ddd;
             overflow: hidden;
         }
@@ -133,7 +133,74 @@ endif;
 unset($__errorArgs, $__bag); ?>
                 </span>
             </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Price</label>
+                <input type="number" name="price" class="form-control" value="<?php echo e($cars->price); ?>">
+                <span class="text-danger">
+                  <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                      <?php echo e($message); ?>
 
+                  <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+              </span>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Discount Price</label>
+                <input type="number" name="discount_price" class="form-control" value="<?php echo e($cars->discount_price); ?>">
+                <span class="text-danger">
+                  <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                      <?php echo e($message); ?>
+
+                  <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+              </span>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Discount Price Start Date</label>
+                <input type="date" name="discount_price_start_date" class="form-control" value="<?php echo e($cars->start_date); ?>">
+                <span class="text-danger">
+                  <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                      <?php echo e($message); ?>
+
+                  <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+              </span>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Discount Price End Date</label>
+                <input type="date" name="discount_price_end_date" class="form-control" value="<?php echo e($cars->end_date); ?>">
+                <span class="text-danger">
+                  <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                      <?php echo e($message); ?>
+
+                  <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+              </span>
+            </div>
             <div class="mb-3 col-12">
                 <label class="form-label">Description</label>
                 <textarea class="form-control" id="summernote" style="height: 100px" name="desc"><?php echo e($cars->description); ?></textarea>
@@ -184,12 +251,22 @@ unset($__errorArgs, $__bag); ?>
 
                 </div>
             </div>
-            <div class="form-group mb-3 d-flex ms-2">
-                <label class="form-label" for="car_images"> Current Car Images</label>
+            <label class="form-label d-block" for="car_images"> Current Car Images</label>
+            <div class="form-group mb-3 ms-2 d-flex">
                 <?php $__currentLoopData = $cars->images; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                   <div class="images">
-                    <img src="<?php echo e($img->image_url); ?>" alt="">
-                   </div>
+                   <div class="images d-flex">
+                    <img src="<?php echo e($img->image_url); ?>" alt="<?php echo e($cars->title); ?>">
+                </div>
+                <span>
+
+
+                    <form action="<?php echo e(route('product.gallary.image.delete', $img->id)); ?>" id="delete-form-<?php echo e($img->id); ?>" method="GET" enctype="multipart/form-data">
+                        <?php echo csrf_field(); ?>
+                        <?php echo method_field("DELETE"); ?>
+                        <a href="<?php echo e(route('product.gallary.image.delete', $img->id)); ?>" class="btn btn-sm deleteBtn"><i class="fa-solid fa-trash" style="color: #871218;"></i></a>
+                    </form>
+                </span>
+
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
 
@@ -203,12 +280,6 @@ unset($__errorArgs, $__bag); ?>
             <div id="image_preview_container" class="image-preview-container">
                 <!-- Image previews will be appended here -->
             </div>
-
-
-
-
-
-
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -260,6 +331,20 @@ unset($__errorArgs, $__bag); ?>
                 // Optionally, clear the file input for re-adding if needed:
                 $('#car_images').val('');
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

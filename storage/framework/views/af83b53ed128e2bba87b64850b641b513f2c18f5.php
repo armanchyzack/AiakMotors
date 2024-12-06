@@ -93,7 +93,11 @@
                             <div class="sb-nav-link-icon"><i class="fa fa-plus" aria-hidden="true"></i></div>
                             All Accessory
                         </a>
-
+                        <div class="sb-sidenav-menu-heading">Voucher</div>
+                        <a class="nav-link" href="<?php echo e(route('discount.code.all')); ?>">
+                            <div class="sb-nav-link-icon"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                            All Discount Code
+                        </a>
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as: Admin</div>

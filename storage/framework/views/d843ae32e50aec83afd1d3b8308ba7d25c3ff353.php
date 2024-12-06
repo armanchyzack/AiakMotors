@@ -18,7 +18,7 @@ img {
         <?php echo method_field("PUT"); ?>
         <div class="mb-3">
           <label class="form-label">Category Name</label>
-          <input type="text" name="title" class="form-control" value="<?php echo e(Str::slug($categories->title)); ?>">
+          <input type="text" name="title" class="form-control" value="<?php echo e(Str::ucfirst($categories->title)); ?>">
           <span class="text-danger">
             <?php $__errorArgs = ['title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');

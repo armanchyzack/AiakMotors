@@ -93,7 +93,95 @@ endif;
 unset($__errorArgs, $__bag); ?>
         </span>
         </div>
+        <div class="mb-3 col-lg-6">
+            <label class="form-label">Price</label>
+            <input type="number" name="price" class="form-control">
+            <span class="text-danger">
+              <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                  <?php echo e($message); ?>
 
+              <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </span>
+        </div>
+        <div class="mb-3 col-lg-6">
+            <label class="form-label">Status</label>
+            <select class="form-select" aria-label="Default select example" name="status">
+              <option selected>Open this select Status</option>
+              <option value="0">Active</option>
+              <option value="1">Deactive</option>
+            </select>
+            <span class="text-danger">
+              <?php $__errorArgs = ['status'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                  <?php echo e($message); ?>
+
+              <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </span>
+          </div>
+        <div class="mb-3 col-lg-4">
+            <label class="form-label">Discount Price</label>
+            <input type="number" name="discount_price" class="form-control">
+            <span class="text-danger">
+              <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                  <?php echo e($message); ?>
+
+              <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label class="form-label">Discount Price Start Date</label>
+            <input type="date" name="discount_price_start_date" class="form-control">
+            <span class="text-danger">
+              <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                  <?php echo e($message); ?>
+
+              <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label class="form-label">Discount Price End Date</label>
+            <input type="date" name="discount_price_end_date" class="form-control">
+            <span class="text-danger">
+              <?php $__errorArgs = ['name'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                  <?php echo e($message); ?>
+
+              <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+          </span>
+        </div>
         <div class="mb-3 col-12">
             <label class="form-label">Description</label>
             <textarea class="form-control" id="summernote" style="height: 100px" name="desc"></textarea>

@@ -19,7 +19,7 @@ img {
         @method("PUT")
         <div class="mb-3">
           <label class="form-label">Category Name</label>
-          <input type="text" name="title" class="form-control" value="{{ Str::slug($categories->title) }}">
+          <input type="text" name="title" class="form-control" value="{{ Str::ucfirst($categories->title) }}">
           <span class="text-danger">
             @error('title')
                 {{ $message }}

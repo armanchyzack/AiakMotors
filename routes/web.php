@@ -5,11 +5,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BackendController\CategoryController;
+use App\Http\Controllers\BackendController\DiscountCodeController;
 use App\Http\Controllers\BackendController\FooterController;
 use App\Http\Controllers\BackendController\MenuController;
 use App\Http\Controllers\BackendController\ProductController;
 use App\Http\Controllers\BackendController\SocialMediaController;
 use App\Http\Controllers\BackendController\SpinWheelController;
+use App\Models\DiscountCode;
+use App\Http\Controllers\Frontend\SpinnerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,8 +26,20 @@ use App\Http\Controllers\BackendController\SpinWheelController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('Frontend.index');
 });
+
+
+Route::prefix('spine')->name('spine.')->controller(SpinnerController::class)->group(function(){
+    route::get('/', 'view')->name('view');
+});
+
+
+
+
+
+
+
 
 Auth::routes();
 
@@ -39,6 +54,7 @@ Route::prefix('category')->name('category.')->controller(CategoryController::cla
     route::get('/edit{categories:id}', 'editCategory')->name('edit');
     route::put('/update{categories:id}', 'updateCategory')->name('update');
     route::delete('/delete{categories:id}', 'deleteCategory')->name('delete');
+    route::get('status-update/{categories:id}', 'statusUpdate')->name('status.update');
 });
 
 Route::prefix('menu')->name('menu.')->controller(MenuController::class)->group(function(){
@@ -66,22 +82,30 @@ Route::prefix('product')->name('product.')->controller(ProductController::class)
     route::get('/all', 'allProduct')->name('all');
     route::get('/edit/{cars:id}', 'editProduct')->name('edit');
     route::put('/update/{cars:id}', 'updateProduct')->name('update');
-    // route::delete('/delete{categories:id}', 'deleteCategory')->name('delete');
-    // route::get('/gallary-image-delete/{images:id}', 'GallarydeleteImage')->name('gallary.image.delete');
-    route::delete('/image-delete/{images:id}', 'deleteImage')->name('image.delete');
-    // Route::post('/images/delete', [ImageController::class, 'deleteMultiple'])->name('images.deleteMultiple');
+    route::get('status-update/{cars:id}', 'statusUpdate')->name('status.update');
+    route::delete('/delete{cars:id}', 'deleteCar')->name('delete');
+    route::get('/gallary-image-delete/{images:id}', 'GallarydeleteImage')->name('gallary.image.delete');
 });
 
 Route::prefix('accessory')->name('accessory.')->controller(AccessoryController::class)->group(function(){
     route::get('/', 'view')->name('view');
-    // route::post('/add', 'insert')->name('store');
+    route::post('/add', 'insert')->name('store');
     route::get('/all', 'allAccessory')->name('all');
-    // route::get('/edit/{cars:id}', 'editProduct')->name('edit');
-    // route::put('/update/{cars:id}', 'updateProduct')->name('update');
-    // // route::delete('/delete{categories:id}', 'deleteCategory')->name('delete');
-    // // route::get('/gallary-image-delete/{images:id}', 'GallarydeleteImage')->name('gallary.image.delete');
-    // route::delete('/image-delete/{images:id}', 'deleteImage')->name('image.delete');
-    // // Route::post('/images/delete', [ImageController::class, 'deleteMultiple'])->name('images.deleteMultiple');
+    route::get('status-update/{accessories:id}', 'statusUpdate')->name('status.update');
+    route::get('/edit/{accessories:id}', 'editAccessory')->name('edit');
+    route::put('/update/{accessories:id}', 'updateAccessory')->name('update');
+    route::delete('/delete{accessories:id}', 'deleteAccessory')->name('delete');
+
+});
+Route::prefix('discount-code')->name('discount.code.')->controller(DiscountCodeController::class)->group(function(){
+    route::get('/', 'view')->name('view');
+    route::post('/add', 'insert')->name('store');
+    route::get('/all', 'allDiscountCode')->name('all');
+
+    route::get('status-update/{discounts:id}', 'statusUpdate')->name('status.update');
+    route::get('/edit/{discounts:id}', 'editdiscountCode')->name('edit');
+    route::put('/update/{discounts:id}', 'updateDiscountCode')->name('update');
+    route::delete('/delete{discounts:id}', 'deleteDiscountCode')->name('delete');
 });
 
 

@@ -60,8 +60,8 @@
 
         .images{
             position: relative;
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             border: 1px solid #ddd;
             overflow: hidden;
         }
@@ -117,7 +117,42 @@
                     @enderror
                 </span>
             </div>
-
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Price</label>
+                <input type="number" name="price" class="form-control" value="{{ $cars->price }}">
+                <span class="text-danger">
+                  @error('name')
+                      {{ $message }}
+                  @enderror
+              </span>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Discount Price</label>
+                <input type="number" name="discount_price" class="form-control" value="{{ $cars->discount_price }}">
+                <span class="text-danger">
+                  @error('name')
+                      {{ $message }}
+                  @enderror
+              </span>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Discount Price Start Date</label>
+                <input type="date" name="discount_price_start_date" class="form-control" value="{{ $cars->start_date }}">
+                <span class="text-danger">
+                  @error('name')
+                      {{ $message }}
+                  @enderror
+              </span>
+            </div>
+            <div class="mb-3 col-lg-3">
+                <label class="form-label">Discount Price End Date</label>
+                <input type="date" name="discount_price_end_date" class="form-control" value="{{ $cars->end_date }}">
+                <span class="text-danger">
+                  @error('name')
+                      {{ $message }}
+                  @enderror
+              </span>
+            </div>
             <div class="mb-3 col-12">
                 <label class="form-label">Description</label>
                 <textarea class="form-control" id="summernote" style="height: 100px" name="desc">{{ $cars->description }}</textarea>
@@ -152,12 +187,22 @@
 
                 </div>
             </div>
-            <div class="form-group mb-3 d-flex ms-2">
-                <label class="form-label" for="car_images"> Current Car Images</label>
+            <label class="form-label d-block" for="car_images"> Current Car Images</label>
+            <div class="form-group mb-3 ms-2 d-flex">
                 @foreach ($cars->images as $img)
-                   <div class="images">
-                    <img src="{{ $img->image_url }}" alt="">
-                   </div>
+                   <div class="images d-flex">
+                    <img src="{{ $img->image_url }}" alt="{{ $cars->title }}">
+                </div>
+                <span>
+
+
+                    <form action="{{ route('product.gallary.image.delete', $img->id) }}" id="delete-form-{{ $img->id }}" method="GET" enctype="multipart/form-data">
+                        @csrf
+                        @method("DELETE")
+                        <a href="{{ route('product.gallary.image.delete', $img->id) }}" class="btn btn-sm deleteBtn"><i class="fa-solid fa-trash" style="color: #871218;"></i></a>
+                    </form>
+                </span>
+
                 @endforeach
             </div>
 
@@ -171,13 +216,6 @@
             <div id="image_preview_container" class="image-preview-container">
                 <!-- Image previews will be appended here -->
             </div>
-
-
-
-
-{{--
-            <span class="mb-3 col-sm-2"><a class="nav-link btn btn-sm btn-secondary w-2" href="{{ route('product.gallary.image.delete', $images->id) }}">Gallary Image</a></span> --}}
-
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
@@ -229,6 +267,20 @@
                 // Optionally, clear the file input for re-adding if needed:
                 $('#car_images').val('');
             }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -15,6 +15,8 @@
                 <th scope="col">Image</th>
                 <th scope="col">Category</th>
                 <th scope="col">Title</th>
+                <th scope="col">Price</th>
+                <th scope="col">Discount Price</th>
                 <th scope="">Edit</th>
                 <th scope="">Delete</th>
 
@@ -27,17 +29,32 @@
                   <th scope="row"><?php echo e(++$index); ?></th>
                   <td style="height: 2rem; width:1rem"><img style="width: 100%; height:100%" src="<?php echo e($car->image_url); ?>" alt=""></td>
                   <td>
-                    sgad
+                    <?php echo e($car->category->title); ?>
+
                   </td>
                   <td><?php echo e($car->name); ?></td>
+                  <td><?php echo e($car->price); ?></td>
+
+                  <td>
+                    <?php if($car->status == 0): ?>
+
+                    <a href="<?php echo e(route('product.status.update', $car->id)); ?>" btn btn-sm btn-success> <i class="fa-solid fa-toggle-on h5" style="color: #63E6BE;"></i></a>
+                    <?php else: ?>
+                    <a href="<?php echo e(route('product.status.update', $car->id)); ?> " btn-sm btn-danger> <i class="fa-solid fa-toggle-off h5" style="color: #ac1025;"></i></a>
+
+                    <?php endif; ?>
+
+
+
+                  </td>
 
                   <td class="parent_class " id="expanded_employee" data-id=""><a href="<?php echo e(route('product.edit', $car->id)); ?>"><i class='fas fa-edit' style='font-size:1rem'></i></a></td>
                   <td class="text-right deleteBtn">
-                    <button class="btn btn-sm" onclick="">
+                    <button class="btn btn-sm" onclick="confirmDelete(<?php echo e($car->id); ?>)">
                         <i class='fas fa-trash' style='font-size:1rem;color:red'></i>
                     </button>
                     <a href="#"  class="btn btn-sm deleteBtn"></a>
-                    <form action="" id="delete-form-" method="POST">
+                    <form action="<?php echo e(route('product.delete', $car->id)); ?>" id="delete-form-<?php echo e($car->id); ?>" method="POST">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field("DELETE"); ?>
 
@@ -76,7 +93,7 @@
 <?php $__env->startPush('customJs'); ?>
 <script>
 
-function confirmDelete(categoryId) {
+function confirmDelete(carID) {
     Swal.fire({
         title: 'Are you sure?',
         text: "This action will delete the product and its images!",
@@ -88,7 +105,7 @@ function confirmDelete(categoryId) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Perform form submission to delete product
-            document.getElementById(`delete-form-${categoryId}`).submit();
+            document.getElementById(`delete-form-${carID}`).submit();
         }
     })
 }

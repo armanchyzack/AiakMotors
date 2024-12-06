@@ -14,7 +14,6 @@
                 <th scope="col">#</th>
                 <th scope="col">Image</th>
                 <th scope="col">Category</th>
-                <th scope="col">Status</th>
                 <th scope="">Edit</th>
                 <th scope="">Delete</th>
 
@@ -26,10 +25,6 @@
                   <th scope="row"><?php echo e(++$index); ?></th>
                   <td style="height: 2rem; width:1rem"><img style="width: 100%; height:100%" src="<?php echo e($category->image_url); ?>" alt=""></td>
                   <td><?php echo e($category->title); ?></td>
-                  <td>
-                    <a href="" class="h4 danger"><i class="fa-solid fa-toggle-on" style="color: #63E6BE;"></i></a>
-                    
-                  </td>
                   <td class="parent_class " id="expanded_employee" data-id=""><a href="<?php echo e(route('category.edit',$category->id)); ?>"><i class='fas fa-edit' style='font-size:1rem'></i></a></td>
                   <td class="text-right deleteBtn">
                     <button class="btn btn-sm" onclick="confirmDelete(<?php echo e($category->id); ?>)">

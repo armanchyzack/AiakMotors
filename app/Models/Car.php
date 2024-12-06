@@ -28,9 +28,6 @@ class Car extends Model
     {
         return $this->hasMany(Image::class);
     }
-    public function menu()
-    {
-        return $this->belongsTo(Menu::class, 'menu_id');
-    }
+    
 
 }

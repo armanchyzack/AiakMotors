@@ -45,7 +45,7 @@
         <h2 class="text-center">Product</h2>
     </div>
     <div class="card-body row">
-        <h5 class="card-title col-6">Add a Category</h5>
+        <h5 class="card-title col-6">Add a Car Product</h5>
         <span class="col-6 text-end"><a href="{{ route('product.all') }}" class="btn btn-success btn-sm">All  Car's</a></span>
         <hr>
       <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data" class="row">
@@ -78,7 +78,55 @@
               @enderror
         </span>
         </div>
-
+        <div class="mb-3 col-lg-6">
+            <label class="form-label">Price</label>
+            <input type="number" name="price" class="form-control">
+            <span class="text-danger">
+              @error('name')
+                  {{ $message }}
+              @enderror
+          </span>
+        </div>
+        <div class="mb-3 col-lg-6">
+            <label class="form-label">Status</label>
+            <select class="form-select" aria-label="Default select example" name="status">
+              <option selected>Open this select Status</option>
+              <option value="0">Active</option>
+              <option value="1">Deactive</option>
+            </select>
+            <span class="text-danger">
+              @error('status')
+                  {{ $message }}
+              @enderror
+          </span>
+          </div>
+        <div class="mb-3 col-lg-4">
+            <label class="form-label">Discount Price</label>
+            <input type="number" name="discount_price" class="form-control">
+            <span class="text-danger">
+              @error('name')
+                  {{ $message }}
+              @enderror
+          </span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label class="form-label">Discount Price Start Date</label>
+            <input type="date" name="discount_price_start_date" class="form-control">
+            <span class="text-danger">
+              @error('name')
+                  {{ $message }}
+              @enderror
+          </span>
+        </div>
+        <div class="mb-3 col-lg-4">
+            <label class="form-label">Discount Price End Date</label>
+            <input type="date" name="discount_price_end_date" class="form-control">
+            <span class="text-danger">
+              @error('name')
+                  {{ $message }}
+              @enderror
+          </span>
+        </div>
         <div class="mb-3 col-12">
             <label class="form-label">Description</label>
             <textarea class="form-control" id="summernote" style="height: 100px" name="desc"></textarea>

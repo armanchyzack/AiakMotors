@@ -17,7 +17,7 @@ class ProductController extends Controller
         $exten = $request->thumbnail_image->extension();
         $name =  'Car-' . Str::slug($request->name). uniqid(). '.'.$exten;
         $path = $request->thumbnail_image->storeAs('CarImage', $name , 'public');
-        $url = config('app.url') . 'storage/' . $path;
+        $url = config('app.url') . '/storage/' . $path;
         return [
         'image' => $name,
         'image_url' =>$url
@@ -35,6 +35,10 @@ class ProductController extends Controller
         $cars->category_id = $request->parent_category;
         $cars->name = $request->name;
         $cars->slug = $request->slug;
+        $cars->price = $request->price;
+        $cars->discount_price = $request->discount_price;
+        $cars->start_date = $request->discount_price_start_date;
+        $cars->end_date = $request->discount_price_end_date;
         $cars->description = $request->desc;
         if($request->hasFile('thumbnail_image')){
 
@@ -43,6 +47,10 @@ class ProductController extends Controller
         }
         $cars->save();
 
+        if($request->hasFile('car_images')){
+
+            $this->multipleImage($request, $cars);
+        }
     }
 
     function multipleImage($request,$cars){
@@ -50,7 +58,7 @@ class ProductController extends Controller
             $exten = $image->extension();
             $name =  'Car-'.  Str::slug($request->name) . uniqid(). '.'.$exten;
             $path = $image->storeAs('CarImage', $name , 'public');
-            $url = config('app.url') . 'storage/' . $path;
+            $url = config('app.url') . '/storage/' . $path;
 
             $images = new Image();
             $images->car_id = $cars->id;
@@ -63,20 +71,22 @@ class ProductController extends Controller
 
 
     function view(){
-        $categories = Category::select('id','title')->where('status',1)->get();
+        $categories = Category::select('id','title')->get();
         return view('Backend.Product.add', compact('categories'));
     }
 
 
     function insert(Request $request){
     //? product validation
-        // $request->validate([
-        //     'name' => 'required|unique:cars,name',
-        //     'slug' => 'string|unique:cars,slug',
-        //     'parent_category' => 'required',
-        //     'desc' => 'required',
-        //     'thumbnail_image' => 'required|mimes:png,jpg',
-        // ]);
+        $request->validate([
+            'name' => 'required|unique:cars,name',
+            'slug' => 'string|unique:cars,slug',
+            'parent_category' => 'required',
+            'desc' => 'required',
+            'status' => 'required',
+            'price' => 'required',
+            'thumbnail_image' => 'required|mimes:png,jpg',
+        ]);
     //? product store
     //?single image store
 
@@ -87,13 +97,13 @@ class ProductController extends Controller
             $this->multipleImage($request,$cars);
         }
 
-        return redirect()->route('product.all')->with('success', 'Product Add Successfully');
+        return redirect()->route('product.all')->with('success', 'Car Product Add Successfully');
 
 
     }
 
     function allProduct(){
-        $cars = Car::select('id' , 'name' , 'image_url' , 'category_id')->simplePaginate(15);
+        $cars = Car::select('id' , 'name' , 'image_url' , 'category_id','price', 'status')->simplePaginate(15);
 
         return view('Backend.Product.all' , compact('cars'));
     }
@@ -128,20 +138,45 @@ class ProductController extends Controller
 
 
     function GallarydeleteImage(Image $images){
-        return view('Backend.Product.gallary_img', compact('images'));
-    }
-
-
-    public function deleteImage(Image $images)
-    {
-
         $path = 'CarImage/' . $images->image;
         if (Storage::disk('public')->exists($path)) {
             Storage::disk('public')->delete($path);
         }
         $images->delete();
         return redirect()->back()->with('deletesuccess', 'Product image delete Successfully');
+
     }
 
 
+
+
+
+    function statusUpdate(Car $cars){
+        if($cars->status == 0){
+            $cars->update([
+                'status' => $cars->status = 1,
+            ]);
+        }else{
+            $cars->update([
+                'status' => $cars->status = 0,
+            ]);
+        }
+
+        return back()->with('success', 'you status update successfully');
+    }
+
+
+    function deleteCar(Car $cars, Image $images){
+
+        $isDelete = $this->imageDelete($cars);
+        $path = 'CarImage/' . $images->image;
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+        }
+        $images->delete();
+        if($isDelete){
+            $cars->delete();
+        }
+        return redirect()->route('product.all')->with('deletesuccess', 'Category delete Successfully');
+    }
 }

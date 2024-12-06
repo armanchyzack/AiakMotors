@@ -15,7 +15,6 @@
                 <th scope="col">#</th>
                 <th scope="col">Image</th>
                 <th scope="col">Category</th>
-                <th scope="col">Status</th>
                 <th scope="">Edit</th>
                 <th scope="">Delete</th>
 
@@ -27,16 +26,6 @@
                   <th scope="row">{{ ++$index  }}</th>
                   <td style="height: 2rem; width:1rem"><img style="width: 100%; height:100%" src="{{ $category->image_url }}" alt=""></td>
                   <td>{{ $category->title }}</td>
-                  <td>
-                    <a href="" class="h4 danger"><i class="fa-solid fa-toggle-on" style="color: #63E6BE;"></i></a>
-                    {{-- @if ($category->status == 1)
-
-                    <a href="{{ route('category.status', $category->id) }}" class="h4 danger"><i class="fa-solid fa-toggle-on" style="color: #63E6BE;"></i></a>
-                    @else
-
-                    <a href="{{ route('category.status', $category->id) }}" class="h4 danger"><i class="fa-solid fa-toggle-off" style="color: #d73333;"></i></a>
-                    @endif --}}
-                  </td>
                   <td class="parent_class " id="expanded_employee" data-id=""><a href="{{ route('category.edit',$category->id) }}"><i class='fas fa-edit' style='font-size:1rem'></i></a></td>
                   <td class="text-right deleteBtn">
                     <button class="btn btn-sm" onclick="confirmDelete({{ $category->id }})">

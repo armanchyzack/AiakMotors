@@ -13,8 +13,9 @@ class CategoryController extends Controller
 
     function ImageStor($request){
         // Image insert and name Proccess
+        if($request->hasFile('category_image')){
 
-        $exten  = $request->category_image->extension();
+            $exten  = $request->category_image->extension();
             $name = 'category-' . Str::slug($request->slug) . '.' . $exten;
             $path = $request->category_image->storeAs('Image', $name, 'public');
             $img_url = env('APP_URL') . Storage::url($path);
@@ -24,6 +25,7 @@ class CategoryController extends Controller
                 'image' => $name,
                 'img_url' => $img_url
             ];
+        }
     }
     function imageDelete($categories){
         $path = 'Image/' . $categories->image;
@@ -54,7 +56,6 @@ class CategoryController extends Controller
     $request->validate([
         'title' => 'required|unique:categories,title',
         'slug' => 'required|unique:categories,slug',
-        'category_image' => 'required',
     ]);
 
         $imagestore = $this->ImageStor($request);
@@ -71,6 +72,10 @@ class CategoryController extends Controller
     function editCategory(Category $categories){
         return view('Backend.Category.edit', compact('categories'));
     }
+
+
+
+
     function updateCategory(Request $request, Category $categories){
         // validation
         $request->validate([
@@ -95,5 +100,17 @@ class CategoryController extends Controller
         return redirect()->route('category.all')->with('deletesuccess', 'Category delete Successfully');
     }
 
+    function statusUpdate(Category $categories){
+        if($categories->status == 0){
+            $categories->update([
+                'status' => $categories->status = 1,
+            ]);
+        }else{
+            $categories->update([
+                'status' => $categories->status = 0,
+            ]);
+        }
 
+        return back()->with('success', 'you status update successfully');
+    }
 }
