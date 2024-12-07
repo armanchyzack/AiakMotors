@@ -46,7 +46,15 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li> <a class="dropdown-item active" href="<?php echo e(route('logout')); ?>"
+                        onclick="event.preventDefault();
+                                      document.getElementById('logout-form').submit();">
+                                      Log Out
+                     </a>
+
+                     <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                         <?php echo csrf_field(); ?>
+                     </form></li>
                 </ul>
             </li>
         </ul>

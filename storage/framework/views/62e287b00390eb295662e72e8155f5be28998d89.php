@@ -18,38 +18,51 @@
             </div>
         </div>
         <div class="col-9" style="height: 100vh;">
-            <div class="row">
+            <div class="row ">
+                    <div class=" col-4 col-lg-6 col-xl-8 logo center mb-2">
+                        <a href="#">
+                            <img src="<?php echo e(asset('Frontend/img/car logo.jpeg')); ?>" alt="..">
+                        </a>
+                    </div>
+                    <div class=" col-8 col-lg-6 col-xl-4 d-flex mt-3 text-end me-0 pl-3">
+                        <!--add to cart , profile buton-->
 
-                <div class="col-4 col-lg-6 col-xl-8 logo center mb-2">
-                    <a href="">
-                        <img src="<?php echo e(asset('Frontend/img/car logo.jpeg')); ?>" alt="ddddd">
-                    </a>
-                </div>
-                <div class="col-8 col-lg-6 col-xl-4 d-flex mt-3 text-end me-0 pl-3">
-                    <!--add to cart , profile buton-->
+                        <div class="dropdown btn-group-sm">
+                          <a class="btn dropdown-toggle btn-sm btn-group-sm" style="border: 2px solid #ffd700;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-user" style="color: #ffd700"></i>
+                          </a>
+                          <ul class="dropdown-menu dropdown-menu-dark">
+                            <?php if(auth()->guard()->guest()): ?>
+                            <li><a class="dropdown-item active" href="<?php echo e(route('user.login')); ?>">Log In</a></li>
+                            <li><a class="dropdown-item active" href="<?php echo e(route('user.regester')); ?>">Register</a></li>
+                            <?php else: ?>
+                            <li><a class="dropdown-item active" href="#">Profile</a></li>
+                            <li>
+                                <a class="dropdown-item active" href="<?php echo e(route('logout')); ?>"
+                                   onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                                 Log Out
+                                </a>
 
+                                <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" class="d-none">
+                                    <?php echo csrf_field(); ?>
+                                </form>
+                            </li>
+                            <?php endif; ?>
+                          </ul>
+                        </div>
+                        <a href="" class="cart-btn">
+                          <i class="fa-solid fa-cart-shopping" style="color: #ffd700; border: 2px solid #ffd700; padding: 6px;"></i>
+                        </a>
 
-                    <div class="dropdown btn-group-sm">
-                      <a class="btn dropdown-toggle btn-sm btn-group-sm" style="border: 2px solid #ffd700;" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user" style="color: #ffd700"></i>
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-dark">
-                          <li><a class="dropdown-item active" href="#">Action</a></li>
-                          <li><a class="dropdown-item active" href="#">Another action</a></li>
-                      </ul>
-                  </div>
-                    <a href="" class="cart-btn">
-                      <i class="fa-solid fa-cart-shopping" style="color: #ffd700; border: 2px solid #ffd700; padding: 6px;"></i>
-                    </a>
-
-                </div>
+                    </div>
+            </div>
                 <div class="col-12 mb-3 p-2 search">
                   <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-secondary btn-sm" type="submit">Search</button>
                   </form>
                 </div>
-            </div>
             <div class="row">
                 <div class="col-6" >
                     <div class="dropdown" >
@@ -78,7 +91,7 @@
 
             <?php echo $__env->yieldContent('content'); ?>
 
-
+            
 
 
             <div class="container my-5">

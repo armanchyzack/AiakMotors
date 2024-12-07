@@ -92,6 +92,10 @@ body {
 }
 
 
+
+
+
+
 /* @media screen and (max-width: 320px) {
   .sidenav {width: 72px;}
   .sidenav a {padding-left: 12px;
@@ -115,7 +119,7 @@ body {
 }
 .card{
   padding: 1rem;
-  background-color: #000000 !important;
+  background-color: #111111 !important;
 
 }
 

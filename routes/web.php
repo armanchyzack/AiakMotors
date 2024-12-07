@@ -13,6 +13,7 @@ use App\Http\Controllers\BackendController\SocialMediaController;
 use App\Http\Controllers\BackendController\SpinWheelController;
 use App\Models\DiscountCode;
 use App\Http\Controllers\Frontend\SpinnerController;
+use App\Http\Controllers\Frontend\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,6 +35,9 @@ Route::prefix('spine')->name('spine.')->controller(SpinnerController::class)->gr
     route::get('/', 'view')->name('view');
 });
 
+Route::get('user/login', [UserController::class, 'userLogin'])->name('user.login');
+Route::get('user/regester', [UserController::class, 'userRegester'])->name('user.regester');
+Route::get('user/profile', [UserController::class, 'userProfile'])->name('user.profile');
 
 
 
@@ -42,6 +46,8 @@ Route::prefix('spine')->name('spine.')->controller(SpinnerController::class)->gr
 
 
 Auth::routes();
+
+Route::middleware(['auth','role:admin'])->group(function(){
 
 Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
@@ -127,3 +133,4 @@ Route::prefix('footer')->name('footer.')->controller(FooterController::class)->g
     route::put('/update{footer:id}', 'update')->name('update');
 });
 
+});
